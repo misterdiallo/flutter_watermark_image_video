@@ -24,6 +24,10 @@ dependencies:
   image_picker: ^0.8.6
   widgets_to_image: ^0.0.2
   gallery_saver: ^2.3.2
+  screenshot: ^1.2.3
+  sn_progress_dialog: ^1.0.8
+  video_player: ^2.4.8
+  extended_image: ^6.3.2
 
 flutter:
   uses-material-design: true

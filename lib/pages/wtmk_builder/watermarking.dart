@@ -19,9 +19,11 @@ class Watermaking extends StatefulWidget {
 class _WatermakingState extends State<Watermaking> {
   var combinedVariable;
   var watermarkVariable;
+  late AssetEntity selectedAsset;
   @override
   void initState() {
     watermarkVariable = _watermark(widget.watermark);
+    selectedAsset = widget.listAssets[0];
     super.initState();
   }
 
@@ -39,7 +41,7 @@ class _WatermakingState extends State<Watermaking> {
   Widget _videoAssetWidget(BuildContext context, AssetEntity entity) {
     return Positioned.fill(
       child: Image(
-        image: AssetEntityImageProvider(entity, isOriginal: false),
+        image: AssetEntityImageProvider(entity, isOriginal: true),
         fit: BoxFit.cover,
       ),
       left: 0.0,
@@ -50,7 +52,7 @@ class _WatermakingState extends State<Watermaking> {
   }
 
   Widget _watermark(File watermarkFile) {
-    return Image.file(watermarkFile);
+    return Container(height: 50, width: 50, child: Image.file(watermarkFile));
   }
 
   Widget _combined(
@@ -59,6 +61,7 @@ class _WatermakingState extends State<Watermaking> {
       controller: widgetToImageController,
       child: Container(
         child: Stack(
+          alignment: Alignment.center,
           children: [
             if (assetEntity.type == AssetType.image)
               _imageAssetWidget(context, assetEntity),
@@ -75,13 +78,11 @@ class _WatermakingState extends State<Watermaking> {
   Widget build(BuildContext context) {
     List<AssetEntity> listAssets = widget.listAssets;
     File watermark = widget.watermark;
-    AssetEntity selectedAsset = listAssets[0];
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          GestureDetector(
-            // onTap: (){},
+          PopupMenuButton(
             child: Row(
               children: [
                 Icon(
@@ -100,6 +101,26 @@ class _WatermakingState extends State<Watermaking> {
                 )
               ],
             ),
+            itemBuilder: (context) {
+              return List.generate(listAssets.length, (index) {
+                return PopupMenuItem(
+                  onTap: () {
+                    setState(() {
+                      selectedAsset = listAssets[index];
+                    });
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    child: Image(
+                      image: AssetEntityImageProvider(listAssets[index],
+                          isOriginal: false),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              });
+            },
           ),
           SizedBox(
             width: 20,
@@ -121,7 +142,7 @@ class _WatermakingState extends State<Watermaking> {
                 if (listAssets.length > 1) {
                   for (var i = 0; i < listAssets.length; i++) {
                     setState(() {
-                      _combined(listAssets[i], watermarkVariable, context);
+                      selectedAsset = listAssets[i];
                     });
 
                     final bytes = await widgetToImageController.capture();

@@ -137,43 +137,36 @@ class SelectedAssetsListView extends StatelessWidget {
                       ),
                     const Text('Selected Files'),
                     if (assets.isNotEmpty)
-                      InkWell(
-                        onTap: () {
+                      ElevatedButton(
+                        onPressed: (() {
                           // ! Push the watermarke page
                           Navigator.of(context).push<void>(
-                              MaterialPageRoute<void>(
-                                  builder: (_) =>
-                                      WatermarkBuilder(assets: assets)));
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.4),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Valid",
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 14, 235, 40),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                Icon(
-                                  Icons.done,
-                                  size: 18,
-                                  color: Color.fromARGB(255, 14, 235, 40),
-                                ),
-                              ],
+                            MaterialPageRoute<void>(
+                              builder: (_) => WatermarkBuilder(assets: assets),
                             ),
-                          ),
+                          );
+                        }),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Valid",
+                              style: TextStyle(
+                                // color: Color.fromARGB(255, 14, 235, 40),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Icon(
+                              Icons.done,
+                              size: 18,
+                              // color: Color.fromARGB(255, 14, 235, 40),
+                            ),
+                          ],
                         ),
-                      ),
+                      )
                   ],
                 ),
               ),

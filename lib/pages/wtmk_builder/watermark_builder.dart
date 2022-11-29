@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_pick_file/constants/watermark_model.dart';
 import 'package:flutter_pick_file/data/list_watermark.dart';
-import 'package:flutter_pick_file/pages/wtmk_builder/watermarking.dart';
+import 'package:flutter_pick_file/pages/wtmk_builder/new_watermarking.dart';
 import 'package:flutter_pick_file/pages/wtmk_builder/widgets/pick_file_functions.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -378,15 +378,15 @@ class _WatermarkBuilderState extends State<WatermarkBuilder> {
                       '$dir/${DateTime.now().millisecond}.png';
                   File watermarkValid = File(fullPath);
                   await watermarkValid.writeAsBytes(pngBytes);
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Image.file(watermarkValid),
-                        );
-                      });
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return AlertDialog(
+                  //         content: Image.file(watermarkValid),
+                  //       );
+                  //     });
                   Navigator.of(context).push<void>(MaterialPageRoute<void>(
-                      builder: (_) => Watermaking(
+                      builder: (_) => NewWatermarking(
                             listAssets: widget.assets,
                             watermark: watermarkValid,
                           )));
